@@ -12,16 +12,22 @@ AHeroCharacter::AHeroCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	FP_Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("FP_Camera"));
+	FP_Camera = CreateDefaultSubobject<UCameraComponent>(FName("FP_Camera"));
 	FP_Camera->SetupAttachment(GetCapsuleComponent());
 	FP_Camera->bUsePawnControlRotation = true;
 
-	FP_CharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FP_Mesh"));
+	FP_CharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>(FName("FP_Mesh"));
 	FP_CharacterMesh->SetupAttachment(FP_Camera);
 	FP_CharacterMesh->CastShadow = false;
 	FP_CharacterMesh->bCastDynamicShadow = false;
 	FP_CharacterMesh->SetOnlyOwnerSee(true);
 
+	FP_Gun = CreateDefaultSubobject<USkeletalMeshComponent>(FName("FP_Gun"));
+	FP_Gun->SetupAttachment(FP_CharacterMesh);
+	FP_Gun->CastShadow = false;
+	FP_Gun->bCastDynamicShadow = false;
+	FP_Gun->SetOnlyOwnerSee(true);
+	FP_Gun->AttachTo(FP_CharacterMesh, FName("WeaponSocket"));
 
 }
 

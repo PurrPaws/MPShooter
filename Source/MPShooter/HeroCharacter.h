@@ -17,8 +17,12 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 		class USkeletalMeshComponent* FP_CharacterMesh;
 
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+		class USkeletalMeshComponent* FP_Gun;
+
 	UPROPERTY(VisibleDefaultsOnly, Category = Camera)
 		class UCameraComponent* FP_Camera;
+
 
 protected:
 	// Called when the game starts or when spawned

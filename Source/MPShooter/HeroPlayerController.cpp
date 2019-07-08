@@ -49,3 +49,14 @@ void AHeroPlayerController::RequestLookUp(float Rate)
 
 	ControlledCharacter->LookUp(Rate * Sensitivity);
 }
+
+void AHeroPlayerController::RequestPrimaryFire()
+{
+	if (!ControlledCharacter) { return; } //TODO: Add conditions here
+	
+	ControlledCharacter->PrimaryFire();
+}
+
+void AHeroPlayerController::RequestSecondaryFire()
+{
+}

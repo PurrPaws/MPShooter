@@ -23,6 +23,13 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category = Camera)
 		class UCameraComponent* FP_Camera;
 
+	UPROPERTY(VisibleDefaultsOnly, Category = Setup)
+		class USceneComponent* BulletStartLocation;
+	
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+		TSubclassOf<class AHeroProjectile> ProjectileBP;
+
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -39,5 +46,7 @@ public:
 	void MoveRight(float Rate);
 	void LookUp(float Amount);
 	void LookRight(float Amount);
+	void PrimaryFire();
+	void SecondaryFire();
 	//TODO: Add projectile class to spawn.
 };

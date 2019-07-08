@@ -32,4 +32,8 @@ public:
 		void RequestLookRight(float Rate);
 	UFUNCTION(BlueprintCallable, Category = Requests)
 		void RequestLookUp(float Rate);
+	UFUNCTION(BlueprintCallable, Category = Requests)
+		void RequestPrimaryFire();
+	UFUNCTION(BlueprintCallable, Category = Requests)
+		void RequestSecondaryFire();
 };

@@ -6,6 +6,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "HeroProjectile.h"
 
 // Sets default values
 AHeroCharacter::AHeroCharacter()
@@ -70,5 +71,18 @@ void AHeroCharacter::LookUp(float Amount)
 void AHeroCharacter::LookRight(float Amount)
 {
 	AddControllerYawInput(Amount);
+}
+
+void AHeroCharacter::PrimaryFire()
+{
+	FVector CameraLoc = FP_Camera->GetComponentLocation();
+	FVector DirectionVector = GetControlRotation().Vector();
+	DirectionVector.Normalize();
+
+	GetWorld()->SpawnActor<AHeroProjectile>(ProjectileBP, CameraLoc + (DirectionVector * 65) , GetControlRotation());
+}
+
+void AHeroCharacter::SecondaryFire()
+{
 }
 

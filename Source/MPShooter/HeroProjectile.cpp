@@ -13,7 +13,7 @@ AHeroProjectile::AHeroProjectile()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("BulletMesh"));
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("ProjectileMovementComponent"));
-	ProjectileMovement->InitialSpeed = 12000.f;
+	ProjectileMovement->InitialSpeed = 10000.f;
 	ProjectileMovement->bAutoActivate = true;
 }
 

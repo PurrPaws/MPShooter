@@ -13,8 +13,7 @@ UCLASS()
 class MPSHOOTER_API AHeroPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-
-	class AHeroCharacter* ControlledCharacter;
+		
 	float Sensitivity = 1.f;
 
 protected:
@@ -22,6 +21,9 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	UPROPERTY(BlueprintReadOnly)
+		class AHeroCharacter* ControlledCharacter;
+
 	UFUNCTION(BlueprintCallable, Category=Requests)
 		void RequestMoveRight(float Rate);
 	UFUNCTION(BlueprintCallable, Category = Requests)
@@ -36,4 +38,6 @@ public:
 		void RequestPrimaryFire();
 	UFUNCTION(BlueprintCallable, Category = Requests)
 		void RequestSecondaryFire();
+	UFUNCTION(BlueprintCallable, Category = Requests)
+		void RequestTakeDamage(float Amount);
 };

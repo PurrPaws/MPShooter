@@ -19,6 +19,8 @@ public:
 		class UProjectileMovementComponent* ProjectileMovement;
 	UPROPERTY(VisibleDefaultsOnly)
 		class UStaticMeshComponent* Mesh;
+	UPROPERTY(BlueprintReadOnly)
+		float ProjectileDamage = 10.f;
 
 protected:
 	// Called when the game starts or when spawned

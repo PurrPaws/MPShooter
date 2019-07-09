@@ -29,7 +29,13 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		TSubclassOf<class AHeroProjectile> ProjectileBP;
 
-
+private:
+	float MaxHealth = 100;
+	UPROPERTY(Replicated)
+		float Health = 100;
+	int MaxAmmo = 30;
+	UPROPERTY(Replicated)
+		int CurrentAmmo;
 
 protected:
 	// Called when the game starts or when spawned
@@ -46,7 +52,20 @@ public:
 	void MoveRight(float Rate);
 	void LookUp(float Amount);
 	void LookRight(float Amount);
-	void PrimaryFire();
-	void SecondaryFire();
-	//TODO: Add projectile class to spawn.
+	UFUNCTION(Server, Reliable, WithValidation)
+		void ServerRPCPrimaryFire();
+	UFUNCTION(NetMulticast, Reliable, WithValidation)
+		void ServerRPCSecondaryFire();
+	UFUNCTION(Server, Reliable, WithValidation)
+		void ServerRPCTakeDamage(float Amount);
+	//Getters
+	UFUNCTION(BlueprintCallable)
+		float GetMaxHealth() { return MaxHealth; }
+	UFUNCTION(BlueprintCallable)
+		float GetHealth() { return Health; }
+	UFUNCTION(BlueprintCallable)
+		int GetMaxAmmo() { return MaxAmmo; }
+	UFUNCTION(BlueprintCallable)
+		int GetCurrentAmmo() { return CurrentAmmo; }
+
 };

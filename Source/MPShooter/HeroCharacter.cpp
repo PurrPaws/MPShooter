@@ -7,12 +7,13 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HeroProjectile.h"
+#include "UnrealNetwork.h"
 
 // Sets default values
 AHeroCharacter::AHeroCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
+	bReplicates = true;
 	FP_Camera = CreateDefaultSubobject<UCameraComponent>(FName("FP_Camera"));
 	FP_Camera->SetupAttachment(GetCapsuleComponent());
 	FP_Camera->bUsePawnControlRotation = true;
@@ -30,13 +31,13 @@ AHeroCharacter::AHeroCharacter()
 	FP_Gun->SetOnlyOwnerSee(true);
 	FP_Gun->AttachTo(FP_CharacterMesh, FName("WeaponSocket"));
 
+	CurrentAmmo = MaxAmmo;
 }
 
 // Called when the game starts or when spawned
 void AHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -50,7 +51,6 @@ void AHeroCharacter::Tick(float DeltaTime)
 void AHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 void AHeroCharacter::MoveForward(float Rate)
@@ -73,16 +73,35 @@ void AHeroCharacter::LookRight(float Amount)
 	AddControllerYawInput(Amount);
 }
 
-void AHeroCharacter::PrimaryFire()
+
+bool AHeroCharacter::ServerRPCPrimaryFire_Validate() { return true; }
+void AHeroCharacter::ServerRPCPrimaryFire_Implementation()
 {
 	FVector CameraLoc = FP_Camera->GetComponentLocation();
 	FVector DirectionVector = GetControlRotation().Vector();
 	DirectionVector.Normalize();
 
 	GetWorld()->SpawnActor<AHeroProjectile>(ProjectileBP, CameraLoc + (DirectionVector * 65) , GetControlRotation());
+
+	CurrentAmmo--;
 }
 
-void AHeroCharacter::SecondaryFire()
+bool AHeroCharacter::ServerRPCSecondaryFire_Validate() { return true; }
+void AHeroCharacter::ServerRPCSecondaryFire_Implementation()
 {
 }
 
+bool AHeroCharacter::ServerRPCTakeDamage_Validate(float amount) { return true; }
+void AHeroCharacter::ServerRPCTakeDamage_Implementation(float Amount)
+{
+	Health -= Amount;
+}
+
+
+void AHeroCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	
+	DOREPLIFETIME(AHeroCharacter, Health);
+	DOREPLIFETIME(AHeroCharacter, CurrentAmmo);
+}

@@ -54,9 +54,17 @@ void AHeroPlayerController::RequestPrimaryFire()
 {
 	if (!ControlledCharacter) { return; } //TODO: Add conditions here
 	
-	ControlledCharacter->PrimaryFire();
+	ControlledCharacter->ServerRPCPrimaryFire();
 }
 
 void AHeroPlayerController::RequestSecondaryFire()
 {
+	if (!ControlledCharacter) { return; } //TODO: Add conditions here
+}
+
+void AHeroPlayerController::RequestTakeDamage(float Amount)
+{
+	if (!ControlledCharacter || Amount == 0) { return; } //TODO: Add conditions here
+	if (Amount > ControlledCharacter->GetHealth()) { /*TODO: Die and respawn.*/}
+	else { ControlledCharacter->ServerRPCTakeDamage(Amount); }
 }

@@ -54,7 +54,7 @@ public:
 	void LookRight(float Amount);
 	UFUNCTION(Server, Reliable, WithValidation)
 		void ServerRPCPrimaryFire();
-	UFUNCTION(NetMulticast, Reliable, WithValidation)
+	UFUNCTION(Server, Reliable, WithValidation)
 		void ServerRPCSecondaryFire();
 	UFUNCTION(Server, Reliable, WithValidation)
 		void ServerRPCTakeDamage(float Amount);

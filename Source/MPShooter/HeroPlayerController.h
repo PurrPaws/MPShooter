@@ -24,6 +24,8 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 		class AHeroCharacter* ControlledCharacter;
 
+	class APlayerStart* SpawnPoint = nullptr;
+
 	UFUNCTION(BlueprintCallable, Category=Requests)
 		void RequestMoveRight(float Rate);
 	UFUNCTION(BlueprintCallable, Category = Requests)
@@ -40,4 +42,10 @@ public:
 		void RequestSecondaryFire();
 	UFUNCTION(BlueprintCallable, Category = Requests)
 		void RequestTakeDamage(float Amount);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = HUD)
+		void CreateHUD();
+	UFUNCTION(BlueprintImplementableEvent, Category = HUD)
+		void DestroyHUD();
+
 };
